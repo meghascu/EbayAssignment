@@ -1,6 +1,5 @@
-##EligibitlitySvc
+## EligibitlitySvc
 
-###
 Created a REST API using Spring Boot and Swagger Codegen for service specification.
 Currently, two services are exposed:
 - To find the eligibility of an item for the new shipping program.
