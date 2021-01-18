@@ -8,8 +8,16 @@ Currently, two services are exposed:
     - Adding/removing seller name from a list of enrolled sellers.
     - Updating minimum allowed price of an item.
 
+### Installation
+#### Maven install
+- sudo apt policy maven
+- sudo apt install maven
 
+#### Application installation with maven plugin
+- mvn -N io.takari:maven:wrapper
+
+#### Finally
 Can run application from command line: ./mvnw spring-boot:run
 
-Links of service URL:
-https://www.getpostman.com/collections/d1f9409548f1ad18c486
+#### Links of service URL:
+- https://www.getpostman.com/collections/d1f9409548f1ad18c486
