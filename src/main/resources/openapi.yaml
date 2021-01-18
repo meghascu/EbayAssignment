@@ -1,0 +1,121 @@
+openapi: 3.0.1
+info:
+  title: Sample API
+  description: API description in Markdown.
+  version: 1.0.0
+servers:
+  - url: 'https://api.example.com'
+paths:
+  /eligibility:
+    post:
+      summary: Get item's eligibility
+      description: Get item's eligibility
+      operationId: getEligibility
+      parameters:
+        - in: header
+          name: authorization
+          schema:
+            $ref: '#/components/schemas/ApiAuthToken'
+      requestBody:
+        description: Details of item to verify
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EligibilityRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EligibilityResponse'
+        '400':
+          description: Invalid Input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+  /rules:
+    post:
+      summary: Edit rule
+      description: Single end point for adding , removing and updating entries in rule.
+      operationId: updateRule
+      requestBody:
+        description: Update rules by adding/removing seller, updating minimum price, adding/removing category
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RuleRequest'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Invalid Input
+components:
+  schemas:
+    EligibilityRequest:
+      description: Item detail
+      properties:
+        title:
+          type: string
+        seller:
+          type: string
+        category:
+          type: integer
+        price:
+          type: double
+    RuleRequest:
+      description: Rule definition
+      properties:
+        ruleType:
+          $ref: '#/components/schemas/RuleType'
+        operation:
+          $ref: '#/components/schemas/Operation'
+        value:
+          type: object
+    Operation:
+      description: Type of operation on rules
+      type: string
+      enum:
+        - ADD
+        - UPDATE
+        - DELETE
+
+    ApiError:
+      properties:
+        errorId:
+          type: long
+        errorMessage:
+          type: string
+        errorName:
+          type: string
+    ApiAuthToken:
+      properties:
+        callerId:
+          description: unique id of caller application.
+          type: string
+        creationTs:
+          description: time of creation time stamp.
+          type: long
+        token:
+          description: some unique alphanumeric token to be referenced in data store
+          type: string
+        ttl:
+          description: time to live defining validity of token
+          type: long
+    EligibilityResponse:
+      description: Eligibility of item
+      properties:
+        title:
+          type: string
+        eligible:
+          type: boolean
+    RuleType:
+      description: Type of rule
+      type: string
+      enum:
+        - SELLER
+        - CATEGORY
+        - PRICE
